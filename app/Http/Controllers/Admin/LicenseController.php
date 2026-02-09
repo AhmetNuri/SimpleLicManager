@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\License;
 use App\Models\User;
+use App\Models\LicenseType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -37,7 +38,8 @@ class LicenseController extends Controller
     public function create()
     {
         $users = User::orderBy('email')->get();
-        return view('admin.licenses.create', compact('users'));
+        $licenseTypes = LicenseType::getActiveTypes();
+        return view('admin.licenses.create', compact('users', 'licenseTypes'));
     }
 
     /**
@@ -45,11 +47,13 @@ class LicenseController extends Controller
      */
     public function store(Request $request)
     {
+        $licenseTypeCodes = LicenseType::where('active', true)->pluck('code')->toArray();
+        
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'serial_number' => 'nullable|string|max:64|unique:licenses,serial_number',
             'product_package' => 'required|string|max:255',
-            'license_type' => 'required|in:demo,monthly,yearly,lifetime',
+            'license_type' => 'required|in:' . implode(',', $licenseTypeCodes),
             'starts_at' => 'required|date',
             'expires_at' => 'nullable|date|after:starts_at',
             'device_id' => 'nullable|string|max:255',
@@ -87,7 +91,8 @@ class LicenseController extends Controller
     public function edit(License $license)
     {
         $users = User::orderBy('email')->get();
-        return view('admin.licenses.edit', compact('license', 'users'));
+        $licenseTypes = LicenseType::getActiveTypes();
+        return view('admin.licenses.edit', compact('license', 'users', 'licenseTypes'));
     }
 
     /**
@@ -95,11 +100,13 @@ class LicenseController extends Controller
      */
     public function update(Request $request, License $license)
     {
+        $licenseTypeCodes = LicenseType::where('active', true)->pluck('code')->toArray();
+        
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'serial_number' => 'required|string|max:64|unique:licenses,serial_number,' . $license->id,
             'product_package' => 'required|string|max:255',
-            'license_type' => 'required|in:demo,monthly,yearly,lifetime',
+            'license_type' => 'required|in:' . implode(',', $licenseTypeCodes),
             'starts_at' => 'required|date',
             'expires_at' => 'nullable|date|after:starts_at',
             'device_id' => 'nullable|string|max:255',

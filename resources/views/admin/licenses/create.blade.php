@@ -38,10 +38,12 @@
             <div class="mb-4">
                 <label for="license_type" class="block text-gray-700 text-sm font-bold mb-2">Lisans Tipi *</label>
                 <select name="license_type" id="license_type" required class="shadow border rounded w-full py-2 px-3 text-gray-700">
-                    <option value="demo" {{ old('license_type') == 'demo' ? 'selected' : '' }}>Demo</option>
-                    <option value="monthly" {{ old('license_type', 'monthly') == 'monthly' ? 'selected' : '' }}>Aylık</option>
-                    <option value="yearly" {{ old('license_type') == 'yearly' ? 'selected' : '' }}>Yıllık</option>
-                    <option value="lifetime" {{ old('license_type') == 'lifetime' ? 'selected' : '' }}>Ömür Boyu</option>
+                    <option value="">Seçiniz...</option>
+                    @foreach($licenseTypes as $type)
+                        <option value="{{ $type->code }}" {{ old('license_type', 'monthly') == $type->code ? 'selected' : '' }}>
+                            {{ $type->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 

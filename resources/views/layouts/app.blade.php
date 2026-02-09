@@ -22,6 +22,7 @@
                         <a href="{{ route('dashboard.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Dashboard
                         </a>
+                        @if(Auth::user()->isAdmin())
                         <a href="{{ route('admin.users.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Kullanıcılar
                         </a>
@@ -31,10 +32,15 @@
                         <a href="{{ route('admin.logs.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Loglar
                         </a>
+                        @else
+                        <a href="{{ route('dashboard.licenses.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Lisanslarım
+                        </a>
+                        @endif
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <span class="text-gray-700 mr-4">{{ Auth::user()->email }}</span>
+                    <a href="{{ route('dashboard.profile') }}" class="text-gray-700 mr-4 hover:text-gray-900">{{ Auth::user()->email }}</a>
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">

@@ -86,6 +86,27 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update the user's profile.
+     */
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'name_surname' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
+        ]);
+
+        $user->email = $validated['email'];
+        $user->name_surname = $validated['name_surname'] ?? null;
+        $user->company = $validated['company'] ?? null;
+        $user->save();
+
+        return back()->with('success', 'Profiliniz başarıyla güncellendi.');
+    }
+
+    /**
      * Update the user's password.
      */
     public function updatePassword(Request $request)

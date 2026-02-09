@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LicenseController;
 use App\Http\Controllers\Admin\LicLogController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\LicenseController as UserLicenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,11 +37,16 @@ Route::post('/logout', [ProfileController::class, 'logout'])
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    
+    // Customer licenses
+    Route::get('/licenses', [UserLicenseController::class, 'index'])->name('licenses.index');
+    Route::get('/licenses/{id}', [UserLicenseController::class, 'show'])->name('licenses.show');
 });
 
 // Admin Routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.users.index');
     })->name('index');

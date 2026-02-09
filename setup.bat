@@ -41,7 +41,7 @@ if not exist "artisan" (
 )
 
 echo ======================================
-echo 1/8 - PHP Versiyonu Kontrol Ediliyor
+echo 1/9 - PHP Versiyonu Kontrol Ediliyor
 echo ======================================
 php -v
 if errorlevel 1 (
@@ -62,7 +62,7 @@ if errorlevel 1 (
 echo.
 
 echo ======================================
-echo 2/8 - Gerekli PHP Eklentileri Kontrol Ediliyor
+echo 2/9 - Gerekli PHP Eklentileri Kontrol Ediliyor
 echo ======================================
 
 REM Gerekli extension'ları kontrol et
@@ -81,7 +81,7 @@ for %%E in (%EXTENSIONS%) do (
 echo.
 
 echo ======================================
-echo 3/8 - Composer Kontrol Ediliyor
+echo 3/9 - Composer Kontrol Ediliyor
 echo ======================================
 
 REM Composer'ı önce PATH'te ara
@@ -161,7 +161,7 @@ if /i "%DOWNLOAD_COMPOSER%"=="Y" (
 echo.
 
 echo ======================================
-echo 4/8 - Composer Bagimliliklari Yukleniyor
+echo 4/9 - Composer Bagimliliklari Yukleniyor
 echo ======================================
 echo.
 
@@ -194,7 +194,7 @@ echo ✓ Bagimliliklar yuklendi
 echo.
 
 echo ======================================
-echo 5/8 - .env Dosyasi Olusturuluyor
+echo 5/9 - .env Dosyasi Olusturuluyor
 echo ======================================
 
 if not exist ".env" (
@@ -213,7 +213,7 @@ if not exist ".env" (
 echo.
 
 echo ======================================
-echo 6/8 - Uygulama Anahtari Olusturuluyor
+echo 6/9 - Uygulama Anahtari Olusturuluyor
 echo ======================================
 
 call php artisan key:generate --ansi
@@ -226,7 +226,7 @@ echo ✓ Uygulama anahtari olusturuldu
 echo.
 
 echo ======================================
-echo 7/8 - Storage ve Cache Dizinleri Hazirlaniyor
+echo 7/9 - Storage ve Cache Dizinleri Hazirlaniyor
 echo ======================================
 
 REM Storage dizinlerini oluştur
@@ -248,7 +248,7 @@ echo ✓ Dizin izinleri ayarlandi
 echo.
 
 echo ======================================
-echo 8/8 - MySQL Veritabani Kontrolu
+echo 8/9 - MySQL Veritabani Kontrolu
 echo ======================================
 
 REM XAMPP MySQL'in çalışıp çalışmadığını kontrol et
@@ -295,7 +295,7 @@ if errorlevel 1 (
 echo.
 
 echo Veritabani migration'lari calistiriliyor...
-call php artisan migrate --force
+call php artisan migrate:fresh --force
 if errorlevel 1 (
     echo X Migration basarisiz oldu!
     echo .env dosyasindaki veritabani ayarlarini kontrol edin
@@ -306,13 +306,33 @@ if errorlevel 1 (
 echo ✓ Migration'lar tamamlandi
 echo.
 
+echo ======================================
+echo 9/9 - Ornek Veriler Yukleniyor
+echo ======================================
+
 echo Ornek veriler yukleniyor (seed)...
 call php artisan db:seed --force
 if errorlevel 1 (
-    echo ! Seed verileri yuklenemedi (bu normal olabilir)
-    echo Eger admin kullanicisi gerekiyorsa manuel olarak olusturun
+    echo X Seed verileri yuklenemedi!
+    echo Hata detaylarini kontrol edin.
+    echo.
+    pause
+    exit /b 1
 ) else (
     echo ✓ Seed verileri yuklendi
+    echo.
+    echo ======================================
+    echo VARSAYILAN KULLANICILAR:
+    echo ======================================
+    echo.
+    echo Admin Kullanici:
+    echo   Email: admin@root.com
+    echo   Sifre: 123123
+    echo.
+    echo Demo Kullanici:
+    echo   Email: demo@example.com
+    echo   Sifre: password
+    echo.
 )
 echo.
 
@@ -335,8 +355,11 @@ echo 3. Uygulamaya tarayicinizdan erisim saglayin:
 echo    http://localhost:8000
 echo.
 echo 4. Varsayilan giris bilgileri:
-echo    Admin: admin@example.com / password
+echo    Admin: admin@root.com / 123123
 echo    Demo:  demo@example.com / password
+echo.
+echo 5. Kayit olmak icin:
+echo    http://localhost:8000/register
 echo.
 echo ======================================
 echo XAMPP VHOST KURULUMU (OPSIYONEL):

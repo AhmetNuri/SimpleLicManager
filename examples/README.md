@@ -24,6 +24,15 @@ Konsol uygulaması örneği. `uLicApis.pas` ünitesinin kullanımını gösterir
 4. Hata yönetimi
 5. Çoklu lisans kontrolü
 
+### LicenseCheckVCL.dpr + MainForm.pas
+VCL (görsel) uygulama örneği. Grafiksel arayüz ile API kullanımını gösterir.
+
+**Özellikler:**
+- Form tabanlı lisans kontrolü
+- Tüm parametreleri girme imkanı
+- Sonuçları görsel olarak gösterme
+- Hata mesajlarını kullanıcı dostu şekilde gösterme
+
 ## Kurulum
 
 ### 1. Projenize Ekleme
@@ -172,11 +181,25 @@ case Response.HTTPStatusCode of
 end;
 ```
 
-## Örnek Uygulamayı Çalıştırma
+## Örnek Uygulamaları Çalıştırma
+
+### Konsol Uygulaması (LicenseCheckExample.dpr)
 
 1. Delphi IDE'yi açın
 2. `LicenseCheckExample.dpr` dosyasını açın
 3. F9 ile çalıştırın
+
+### VCL (GUI) Uygulaması (LicenseCheckVCL.dpr)
+
+1. Delphi IDE'yi açın
+2. `LicenseCheckVCL.dpr` dosyasını açın
+3. F9 ile çalıştırın
+4. Formda:
+   - Base URL'yi ayarlayın
+   - Email ve Seri Numarası girin
+   - İsteğe bağlı olarak "Cihaz ID Kullan" seçeneğini işaretleyin
+   - "Lisansı Kontrol Et" butonuna tıklayın
+   - Sonuçlar alt panelde görüntülenecektir
 
 **Not:** Örnekleri çalıştırmadan önce:
 - SimpleLicManager sunucunuzun çalıştığından emin olun
@@ -209,5 +232,8 @@ Sorularınız için:
 - `/license/check` endpoint desteği
 - Class function ve instance kullanımı
 - JSON parse ve record dönüşümü
+- Hata yönetimi
+- Konsol uygulaması örneği (5 farklı kullanım senaryosu)
+- VCL (GUI) uygulaması örneği
 - Hata yönetimi
 - Örnek uygulamalar

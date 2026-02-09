@@ -35,6 +35,9 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-posta</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ad Soyad</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Şirket</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lisans Sayısı</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kayıt Tarihi</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
@@ -45,6 +48,13 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $user->id }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $user->name_surname ?? '-' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $user->company ?? '-' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded {{ $user->role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800' }}">
+                            {{ ucfirst($user->role) }}
+                        </span>
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $user->licenses_count }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $user->created_at->format('d.m.Y H:i') }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -59,7 +69,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">Kullanıcı bulunamadı.</td>
+                    <td colspan="8" class="px-6 py-4 text-center text-gray-500">Kullanıcı bulunamadı.</td>
                 </tr>
                 @endforelse
             </tbody>

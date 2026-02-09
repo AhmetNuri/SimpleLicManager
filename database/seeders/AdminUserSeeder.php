@@ -14,16 +14,22 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
+        // Create default admin user (admin@root.com / 123123)
         $admin = User::create([
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+            'email' => 'admin@root.com',
+            'password' => Hash::make('123123'),
+            'role' => 'admin',
+            'name_surname' => 'System Admin',
+            'company' => 'SimpleLicManager',
         ]);
 
-        // Create a demo user
+        // Create demo user
         $demo = User::create([
             'email' => 'demo@example.com',
             'password' => Hash::make('password'),
+            'role' => 'customer',
+            'name_surname' => 'Demo User',
+            'company' => 'Demo Company',
         ]);
 
         // Create sample licenses for demo user
@@ -51,7 +57,7 @@ class AdminUserSeeder extends Seeder
             'max_connection_count' => 1,
         ]);
 
-        $this->command->info('Admin user created: admin@example.com / password');
+        $this->command->info('Admin user created: admin@root.com / 123123');
         $this->command->info('Demo user created: demo@example.com / password');
         $this->command->info('Sample licenses created for demo user.');
     }

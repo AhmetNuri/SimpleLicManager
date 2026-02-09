@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
+    Route::get('/register', [ProfileController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [ProfileController::class, 'register'])->name('register.post');
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');

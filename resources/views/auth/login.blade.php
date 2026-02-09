@@ -62,6 +62,15 @@
                     </button>
                 </div>
             </form>
+
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600">
+                    Hesabınız yok mu?
+                    <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                        Üye Ol
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 </body>

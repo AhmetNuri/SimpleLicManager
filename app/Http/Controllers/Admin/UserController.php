@@ -42,12 +42,18 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
+            'password' => 'required|min:6',
+            'role' => 'required|in:admin,customer',
+            'name_surname' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
         ]);
 
         User::create([
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
+            'name_surname' => $validated['name_surname'] ?? null,
+            'company' => $validated['company'] ?? null,
         ]);
 
         return redirect()->route('admin.users.index')
@@ -81,10 +87,16 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8',
+            'password' => 'nullable|min:6',
+            'role' => 'required|in:admin,customer',
+            'name_surname' => 'nullable|string|max:255',
+            'company' => 'nullable|string|max:255',
         ]);
 
         $user->email = $validated['email'];
+        $user->role = $validated['role'];
+        $user->name_surname = $validated['name_surname'] ?? null;
+        $user->company = $validated['company'] ?? null;
         
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);

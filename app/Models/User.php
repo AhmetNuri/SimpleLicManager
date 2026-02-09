@@ -20,6 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
+        'role',
+        'name_surname',
+        'company',
     ];
 
     /**
@@ -58,5 +61,21 @@ class User extends Authenticatable
     public function logs()
     {
         return $this->hasMany(LicLog::class);
+    }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is a customer.
+     */
+    public function isCustomer(): bool
+    {
+        return $this->role === 'customer';
     }
 }

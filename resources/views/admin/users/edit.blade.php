@@ -25,7 +25,7 @@
             @enderror
         </div>
 
-        <div class="mb-6">
+        <div class="mb-4">
             <label for="password" class="block text-gray-700 text-sm font-bold mb-2">
                 Yeni Şifre (boş bırakırsanız değişmez)
             </label>
@@ -34,6 +34,44 @@
                    id="password" 
                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('password') border-red-500 @enderror">
             @error('password')
+                <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- Role Selection -->
+        <div class="mb-4">
+            <label for="role" class="block text-gray-700 text-sm font-bold mb-2">
+                Rol *
+            </label>
+            <select name="role" id="role" required class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('role') border-red-500 @enderror">
+                <option value="customer" {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>Customer</option>
+                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+            </select>
+            @error('role')
+                <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- Name Surname -->
+        <div class="mb-4">
+            <label for="name_surname" class="block text-gray-700 text-sm font-bold mb-2">
+                Ad Soyad
+            </label>
+            <input type="text" name="name_surname" id="name_surname" value="{{ old('name_surname', $user->name_surname) }}"
+                   class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name_surname') border-red-500 @enderror">
+            @error('name_surname')
+                <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- Company -->
+        <div class="mb-6">
+            <label for="company" class="block text-gray-700 text-sm font-bold mb-2">
+                Şirket
+            </label>
+            <input type="text" name="company" id="company" value="{{ old('company', $user->company) }}"
+                   class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('company') border-red-500 @enderror">
+            @error('company')
                 <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
             @enderror
         </div>

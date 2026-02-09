@@ -235,5 +235,3 @@ Sorularınız için:
 - Hata yönetimi
 - Konsol uygulaması örneği (5 farklı kullanım senaryosu)
 - VCL (GUI) uygulaması örneği
-- Hata yönetimi
-- Örnek uygulamalar
